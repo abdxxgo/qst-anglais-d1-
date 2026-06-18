@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Annale anglais traduction du 17/06/2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: hsl(158 75% 50%); /* Accent color from dark theme */
+    --primary-hover: hsl(158 75% 40%);
+    --bg: hsl(232 40% 8%);
+    --card: hsl(232 35% 12%);
+    --text: hsl(210 40% 98%);
+    --border: hsl(232 30% 20%);
+    --danger: hsl(0 70% 55%);
+    --danger-bg: hsl(0 70% 15%);
+    --success: hsl(142 70% 50%);
+    --success-bg: hsl(142 70% 15%);
+    --muted: hsl(220 15% 65%);
+    --radius: 1rem;
+    --radius-sm: 0.5rem;
+  }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    margin: 0;
+    padding: 20px;
+    -webkit-font-smoothing: antialiased;
+    color-scheme: dark;
+  }
+  h1, h2, h3, .font-display {
+    font-family: 'Sora', 'Inter', sans-serif;
+    letter-spacing: -0.02em;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border);
+  }
+  h1 { margin: 0 0 0.5rem 0; font-size: 1.5rem; }
+  .meta { color: var(--muted); font-size: 0.875rem; }
+  
+  .score-board {
+    display: flex;
+    gap: 1rem;
+    background: var(--card);
+    padding: 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    margin-bottom: 2rem;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 1rem;
+    z-index: 10;
+    box-shadow: 0 4px 14px -4px rgba(0,0,0,0.05);
+  }
+  
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+  }
+  
+  .q-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .q-prompt {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  img { max-width: 100%; border-radius: var(--radius-sm); margin-bottom: 1rem; }
+  
+  .choices { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+  
+  .choice {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .choice:hover { background-color: hsl(232 30% 18%); }
+  .choice.selected { border-color: var(--primary); background-color: hsl(158 40% 15%); }
+  .choice.correct { border-color: var(--success); background-color: var(--success-bg); color: hsl(142 70% 60%); font-weight: 500; }
+  .choice.incorrect { border-color: var(--danger); background-color: var(--danger-bg); color: hsl(0 70% 65%); }
+  
+  input[type="radio"] { margin-right: 1rem; transform: scale(1.2); cursor: pointer; accent-color: var(--primary); }
+  
+  textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    min-height: 80px;
+    margin-bottom: 1.5rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    background: var(--bg);
+    color: var(--text);
+  }
+  
+  .actions { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+  
+  button {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  button.primary { background: var(--primary); color: hsl(232 60% 10%); }
+  button.primary:hover { background: var(--primary-hover); }
+  button.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  button.secondary:hover { background: hsl(232 30% 18%); }
+  
+  .explanation {
+    display: none;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+  .explanation.visible { display: block; }
+  .noscript-banner {
+    background: hsl(35 80% 12%);
+    border: 2px dashed hsl(35 80% 50%);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    color: hsl(35 90% 85%);
+  }
+  .noscript-banner h3 {
+    margin-top: 0;
+    color: hsl(35 90% 55%);
+    font-size: 1.15rem;
+  }
+  .noscript-banner ol {
+    margin: 0.5rem 0 0 0;
+    padding-left: 1.25rem;
+  }
+  .noscript-banner li {
+    margin-bottom: 0.5rem;
+  }
+  .noscript-banner li:last-child {
+    margin-bottom: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <noscript>
+    <div class="noscript-banner">
+      <h3>⚠️ Mode Lecture Seule (Boutons désactivés)</h3>
+      <p>Sur iPhone, le lecteur par défaut d'iOS (Aperçu rapide) bloque l'interactivité (JavaScript) pour des raisons de sécurité.</p>
+      <p><strong>Pour pouvoir valider les questions et calculer votre score sur votre téléphone :</strong></p>
+      <ol>
+        <li>Téléchargez l'application gratuite <b>Documents de Readdle</b> (ou n'importe quel <b>HTML Viewer</b>) sur l'App Store.</li>
+        <li>Ouvrez votre fichier QCM téléchargé depuis cette application pour activer les scripts.</li>
+      </ol>
+    </div>
+  </noscript>
+  <header>
+    <h1>Annale anglais traduction du 17/06/2026</h1>
+    <div class="meta">Généré le 17/06/2026</div>
+  </header>
+
+  <div class="score-board">
+    <div>Avancée : <b id="progress">0</b> / 15</div>
+    <div>Score : <b id="score">0</b> / 15</div>
+    <button class="secondary" onclick="revealAll()">Tout révéler</button>
+    <button class="secondary" onclick="resetAll()">Recommencer</button>
+  </div>
+
+  <div id="questions-container">
+    <div class="card" id="q-0">
+        <div class="q-header">
+          <span>Question 1</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "Série de cas"</div><div class="choices"><label class="choice" id="label-0-0">
+            <input type="radio" name="q-0" value="0" onchange="selectChoice(0, 0)">
+            <span>Case Report</span>
+          </label><label class="choice" id="label-0-1">
+            <input type="radio" name="q-0" value="1" onchange="selectChoice(0, 1)">
+            <span>Case Series</span>
+          </label><label class="choice" id="label-0-2">
+            <input type="radio" name="q-0" value="2" onchange="selectChoice(0, 2)">
+            <span>Case Study</span>
+          </label><label class="choice" id="label-0-3">
+            <input type="radio" name="q-0" value="3" onchange="selectChoice(0, 3)">
+            <span>Series of Cases</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(0)" id="btn-val-0">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(0)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-0"><div><strong>Bonne réponse :</strong> Case Series</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"Case Series" est la traduction standard pour une série de cas en épidémiologie, décrivant une suite d'observations cliniques.</div></div></div><div class="card" id="q-1">
+        <div class="q-header">
+          <span>Question 2</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "Essai clinique contrôlé"</div><div class="choices"><label class="choice" id="label-1-0">
+            <input type="radio" name="q-1" value="0" onchange="selectChoice(1, 0)">
+            <span>Clinical Controlled Trial</span>
+          </label><label class="choice" id="label-1-1">
+            <input type="radio" name="q-1" value="1" onchange="selectChoice(1, 1)">
+            <span>Controlled Clinical Study</span>
+          </label><label class="choice" id="label-1-2">
+            <input type="radio" name="q-1" value="2" onchange="selectChoice(1, 2)">
+            <span>Controlled Clinical Trial</span>
+          </label><label class="choice" id="label-1-3">
+            <input type="radio" name="q-1" value="3" onchange="selectChoice(1, 3)">
+            <span>Clinical Trial Control</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(1)" id="btn-val-1">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(1)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-1"><div><strong>Bonne réponse :</strong> Controlled Clinical Trial</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"Controlled Clinical Trial" est le terme exact pour un essai clinique où les conditions sont contrôlées afin de comparer l'efficacité de traitements.</div></div></div><div class="card" id="q-2">
+        <div class="q-header">
+          <span>Question 3</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "Méta-analyse"</div><div class="choices"><label class="choice" id="label-2-0">
+            <input type="radio" name="q-2" value="0" onchange="selectChoice(2, 0)">
+            <span>Meta-Study</span>
+          </label><label class="choice" id="label-2-1">
+            <input type="radio" name="q-2" value="1" onchange="selectChoice(2, 1)">
+            <span>Analysis Meta</span>
+          </label><label class="choice" id="label-2-2">
+            <input type="radio" name="q-2" value="2" onchange="selectChoice(2, 2)">
+            <span>Meta-Analysis</span>
+          </label><label class="choice" id="label-2-3">
+            <input type="radio" name="q-2" value="3" onchange="selectChoice(2, 3)">
+            <span>Overall Analysis</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(2)" id="btn-val-2">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(2)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-2"><div><strong>Bonne réponse :</strong> Meta-Analysis</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"Meta-Analysis" est le terme internationalement reconnu pour une étude qui combine les résultats de plusieurs études indépendantes.</div></div></div><div class="card" id="q-3">
+        <div class="q-header">
+          <span>Question 4</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "Critères d'éligibilité"</div><div class="choices"><label class="choice" id="label-3-0">
+            <input type="radio" name="q-3" value="0" onchange="selectChoice(3, 0)">
+            <span>Selection Criteria</span>
+          </label><label class="choice" id="label-3-1">
+            <input type="radio" name="q-3" value="1" onchange="selectChoice(3, 1)">
+            <span>Inclusion Criteria</span>
+          </label><label class="choice" id="label-3-2">
+            <input type="radio" name="q-3" value="2" onchange="selectChoice(3, 2)">
+            <span>Eligibility Criteria</span>
+          </label><label class="choice" id="label-3-3">
+            <input type="radio" name="q-3" value="3" onchange="selectChoice(3, 3)">
+            <span>Admissibility Criteria</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(3)" id="btn-val-3">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(3)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-3"><div><strong>Bonne réponse :</strong> Eligibility Criteria</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"Eligibility Criteria" est la traduction correcte pour les conditions requises pour qu'un participant puisse être inclus dans une étude.</div></div></div><div class="card" id="q-4">
+        <div class="q-header">
+          <span>Question 5</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "Recueil et synthèse de données"</div><div class="choices"><label class="choice" id="label-4-0">
+            <input type="radio" name="q-4" value="0" onchange="selectChoice(4, 0)">
+            <span>Data Collection and Summary</span>
+          </label><label class="choice" id="label-4-1">
+            <input type="radio" name="q-4" value="1" onchange="selectChoice(4, 1)">
+            <span>Data Gathering and Synthesis</span>
+          </label><label class="choice" id="label-4-2">
+            <input type="radio" name="q-4" value="2" onchange="selectChoice(4, 2)">
+            <span>Data Extraction and Synthesis</span>
+          </label><label class="choice" id="label-4-3">
+            <input type="radio" name="q-4" value="3" onchange="selectChoice(4, 3)">
+            <span>Data Retrieval and Analysis</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(4)" id="btn-val-4">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(4)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-4"><div><strong>Bonne réponse :</strong> Data Extraction and Synthesis</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"Data Extraction and Synthesis" décrit le processus de collecte et de combinaison des données issues de différentes sources pour une analyse globale.</div></div></div><div class="card" id="q-5">
+        <div class="q-header">
+          <span>Question 6</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "ont obtenu une rémission"</div><div class="choices"><label class="choice" id="label-5-0">
+            <input type="radio" name="q-5" value="0" onchange="selectChoice(5, 0)">
+            <span>got remission</span>
+          </label><label class="choice" id="label-5-1">
+            <input type="radio" name="q-5" value="1" onchange="selectChoice(5, 1)">
+            <span>achieved remission</span>
+          </label><label class="choice" id="label-5-2">
+            <input type="radio" name="q-5" value="2" onchange="selectChoice(5, 2)">
+            <span>obtained remission</span>
+          </label><label class="choice" id="label-5-3">
+            <input type="radio" name="q-5" value="3" onchange="selectChoice(5, 3)">
+            <span>reached remission</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(5)" id="btn-val-5">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(5)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-5"><div><strong>Bonne réponse :</strong> achieved remission</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"achieved remission" est l'expression idiomatique correcte et la plus courante en anglais médical pour indiquer qu'un patient est entré en rémission.</div></div></div><div class="card" id="q-6">
+        <div class="q-header">
+          <span>Question 7</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "n'ont pas donné leur consentement"</div><div class="choices"><label class="choice" id="label-6-0">
+            <input type="radio" name="q-6" value="0" onchange="selectChoice(6, 0)">
+            <span>didn't provide consent</span>
+          </label><label class="choice" id="label-6-1">
+            <input type="radio" name="q-6" value="1" onchange="selectChoice(6, 1)">
+            <span>refused consent</span>
+          </label><label class="choice" id="label-6-2">
+            <input type="radio" name="q-6" value="2" onchange="selectChoice(6, 2)">
+            <span>did not give consent</span>
+          </label><label class="choice" id="label-6-3">
+            <input type="radio" name="q-6" value="3" onchange="selectChoice(6, 3)">
+            <span>no consent given</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(6)" id="btn-val-6">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(6)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-6"><div><strong>Bonne réponse :</strong> did not give consent</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"did not give consent" est la formulation standard et formelle pour exprimer un refus de consentement dans un contexte de recherche.</div></div></div><div class="card" id="q-7">
+        <div class="q-header">
+          <span>Question 8</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "ont été randomisés"</div><div class="choices"><label class="choice" id="label-7-0">
+            <input type="radio" name="q-7" value="0" onchange="selectChoice(7, 0)">
+            <span>were randomized</span>
+          </label><label class="choice" id="label-7-1">
+            <input type="radio" name="q-7" value="1" onchange="selectChoice(7, 1)">
+            <span>randomized</span>
+          </label><label class="choice" id="label-7-2">
+            <input type="radio" name="q-7" value="2" onchange="selectChoice(7, 2)">
+            <span>underwent randomization</span>
+          </label><label class="choice" id="label-7-3">
+            <input type="radio" name="q-7" value="3" onchange="selectChoice(7, 3)">
+            <span>got randomized</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(7)" id="btn-val-7">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(7)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-7"><div><strong>Bonne réponse :</strong> underwent randomization</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"underwent randomization" est une expression formelle et précise, utilisée pour décrire le processus par lequel les participants sont assignés aléatoirement à des groupes d'étude.</div></div></div><div class="card" id="q-8">
+        <div class="q-header">
+          <span>Question 9</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "ont été perdus de vue"</div><div class="choices"><label class="choice" id="label-8-0">
+            <input type="radio" name="q-8" value="0" onchange="selectChoice(8, 0)">
+            <span>lost sight of</span>
+          </label><label class="choice" id="label-8-1">
+            <input type="radio" name="q-8" value="1" onchange="selectChoice(8, 1)">
+            <span>were lost from study</span>
+          </label><label class="choice" id="label-8-2">
+            <input type="radio" name="q-8" value="2" onchange="selectChoice(8, 2)">
+            <span>were lost to follow-up</span>
+          </label><label class="choice" id="label-8-3">
+            <input type="radio" name="q-8" value="3" onchange="selectChoice(8, 3)">
+            <span>lost track of</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(8)" id="btn-val-8">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(8)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-8"><div><strong>Bonne réponse :</strong> were lost to follow-up</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"were lost to follow-up" est le terme spécifique en recherche pour les participants qui ne peuvent plus être contactés ou suivis pendant une étude.</div></div></div><div class="card" id="q-9">
+        <div class="q-header">
+          <span>Question 10</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "Effet indésirable"</div><div class="choices"><label class="choice" id="label-9-0">
+            <input type="radio" name="q-9" value="0" onchange="selectChoice(9, 0)">
+            <span>Bad effect</span>
+          </label><label class="choice" id="label-9-1">
+            <input type="radio" name="q-9" value="1" onchange="selectChoice(9, 1)">
+            <span>Negative outcome</span>
+          </label><label class="choice" id="label-9-2">
+            <input type="radio" name="q-9" value="2" onchange="selectChoice(9, 2)">
+            <span>Adverse effect</span>
+          </label><label class="choice" id="label-9-3">
+            <input type="radio" name="q-9" value="3" onchange="selectChoice(9, 3)">
+            <span>Undesirable effect</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(9)" id="btn-val-9">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(9)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-9"><div><strong>Bonne réponse :</strong> Adverse effect</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"Adverse effect" est le terme médical standard pour un effet non souhaité ou nocif d'un traitement ou d'une intervention.</div></div></div><div class="card" id="q-10">
+        <div class="q-header">
+          <span>Question 11</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "Délai d'apparition des effets"</div><div class="choices"><label class="choice" id="label-10-0">
+            <input type="radio" name="q-10" value="0" onchange="selectChoice(10, 0)">
+            <span>Effect delay</span>
+          </label><label class="choice" id="label-10-1">
+            <input type="radio" name="q-10" value="1" onchange="selectChoice(10, 1)">
+            <span>Time of appearance</span>
+          </label><label class="choice" id="label-10-2">
+            <input type="radio" name="q-10" value="2" onchange="selectChoice(10, 2)">
+            <span>Onset delay</span>
+          </label><label class="choice" id="label-10-3">
+            <input type="radio" name="q-10" value="3" onchange="selectChoice(10, 3)">
+            <span>Delay of effects</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(10)" id="btn-val-10">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(10)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-10"><div><strong>Bonne réponse :</strong> Onset delay</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"Onset delay" ou "time to onset" sont les traductions précises pour le temps écoulé avant l'apparition des effets d'une intervention ou d'une maladie.</div></div></div><div class="card" id="q-11">
+        <div class="q-header">
+          <span>Question 12</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "Intervalle de confiance"</div><div class="choices"><label class="choice" id="label-11-0">
+            <input type="radio" name="q-11" value="0" onchange="selectChoice(11, 0)">
+            <span>Reliability interval</span>
+          </label><label class="choice" id="label-11-1">
+            <input type="radio" name="q-11" value="1" onchange="selectChoice(11, 1)">
+            <span>Confidence interval</span>
+          </label><label class="choice" id="label-11-2">
+            <input type="radio" name="q-11" value="2" onchange="selectChoice(11, 2)">
+            <span>Trust interval</span>
+          </label><label class="choice" id="label-11-3">
+            <input type="radio" name="q-11" value="3" onchange="selectChoice(11, 3)">
+            <span>Certainty interval</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(11)" id="btn-val-11">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(11)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-11"><div><strong>Bonne réponse :</strong> Confidence interval</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"Confidence interval" est le terme statistique standard utilisé pour exprimer la précision d'une estimation.</div></div></div><div class="card" id="q-12">
+        <div class="q-header">
+          <span>Question 13</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "Taux d'incidence"</div><div class="choices"><label class="choice" id="label-12-0">
+            <input type="radio" name="q-12" value="0" onchange="selectChoice(12, 0)">
+            <span>Rate of incidence</span>
+          </label><label class="choice" id="label-12-1">
+            <input type="radio" name="q-12" value="1" onchange="selectChoice(12, 1)">
+            <span>Incidence ratio</span>
+          </label><label class="choice" id="label-12-2">
+            <input type="radio" name="q-12" value="2" onchange="selectChoice(12, 2)">
+            <span>Incidence rate</span>
+          </label><label class="choice" id="label-12-3">
+            <input type="radio" name="q-12" value="3" onchange="selectChoice(12, 3)">
+            <span>Occurrence rate</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(12)" id="btn-val-12">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(12)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-12"><div><strong>Bonne réponse :</strong> Incidence rate</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"Incidence rate" est le terme épidémiologique correct pour mesurer la fréquence de nouvelles maladies ou événements dans une population sur une période donnée.</div></div></div><div class="card" id="q-13">
+        <div class="q-header">
+          <span>Question 14</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "Facteur de confusion"</div><div class="choices"><label class="choice" id="label-13-0">
+            <input type="radio" name="q-13" value="0" onchange="selectChoice(13, 0)">
+            <span>Confusion factor</span>
+          </label><label class="choice" id="label-13-1">
+            <input type="radio" name="q-13" value="1" onchange="selectChoice(13, 1)">
+            <span>Disturbing factor</span>
+          </label><label class="choice" id="label-13-2">
+            <input type="radio" name="q-13" value="2" onchange="selectChoice(13, 2)">
+            <span>Confounding factor</span>
+          </label><label class="choice" id="label-13-3">
+            <input type="radio" name="q-13" value="3" onchange="selectChoice(13, 3)">
+            <span>Mixing factor</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(13)" id="btn-val-13">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(13)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-13"><div><strong>Bonne réponse :</strong> Confounding factor</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"Confounding factor" (ou "confounder") est le terme exact en épidémiologie pour une variable qui influence à la fois la variable dépendante et la variable indépendante, créant une association fallacieuse.</div></div></div><div class="card" id="q-14">
+        <div class="q-header">
+          <span>Question 15</span>
+          <span style="color:var(--muted)">QCM</span>
+        </div><div class="q-prompt">Traduisez en anglais: "Méthode à double insu (double aveugle)"</div><div class="choices"><label class="choice" id="label-14-0">
+            <input type="radio" name="q-14" value="0" onchange="selectChoice(14, 0)">
+            <span>Double-blind study</span>
+          </label><label class="choice" id="label-14-1">
+            <input type="radio" name="q-14" value="1" onchange="selectChoice(14, 1)">
+            <span>Two-blind method</span>
+          </label><label class="choice" id="label-14-2">
+            <input type="radio" name="q-14" value="2" onchange="selectChoice(14, 2)">
+            <span>Double-blind method</span>
+          </label><label class="choice" id="label-14-3">
+            <input type="radio" name="q-14" value="3" onchange="selectChoice(14, 3)">
+            <span>Blind method</span>
+          </label></div><div class="actions">
+        <button class="primary" onclick="validate(14)" id="btn-val-14">Valider</button>
+        <button class="secondary" onclick="toggleExplanation(14)">Voir la réponse</button>
+      </div>
+      <div class="explanation" id="exp-14"><div><strong>Bonne réponse :</strong> Double-blind method</div><div style="margin-top:0.5rem"><strong>Explication :</strong><br/>"Double-blind method" est le terme standard pour une étude où ni les participants ni les chercheurs ne connaissent l'affectation des traitements, afin de réduire les biais.</div></div></div>
+  </div>
+</div>
+
+<script>
+  const questions = [{"type":"qcm","prompt":"Traduisez en anglais: \"Série de cas\"","choices":["Case Report","Case Series","Case Study","Series of Cases"],"answerIndex":1,"correctAnswerText":"","explanation":"\"Case Series\" est la traduction standard pour une série de cas en épidémiologie, décrivant une suite d'observations cliniques.","id":"q-1781723370979-0"},{"type":"qcm","prompt":"Traduisez en anglais: \"Essai clinique contrôlé\"","choices":["Clinical Controlled Trial","Controlled Clinical Study","Controlled Clinical Trial","Clinical Trial Control"],"answerIndex":2,"correctAnswerText":"","explanation":"\"Controlled Clinical Trial\" est le terme exact pour un essai clinique où les conditions sont contrôlées afin de comparer l'efficacité de traitements.","id":"q-1781723370979-1"},{"type":"qcm","prompt":"Traduisez en anglais: \"Méta-analyse\"","choices":["Meta-Study","Analysis Meta","Meta-Analysis","Overall Analysis"],"answerIndex":2,"correctAnswerText":"","explanation":"\"Meta-Analysis\" est le terme internationalement reconnu pour une étude qui combine les résultats de plusieurs études indépendantes.","id":"q-1781723370979-2"},{"type":"qcm","prompt":"Traduisez en anglais: \"Critères d'éligibilité\"","choices":["Selection Criteria","Inclusion Criteria","Eligibility Criteria","Admissibility Criteria"],"answerIndex":2,"correctAnswerText":"","explanation":"\"Eligibility Criteria\" est la traduction correcte pour les conditions requises pour qu'un participant puisse être inclus dans une étude.","id":"q-1781723370979-3"},{"type":"qcm","prompt":"Traduisez en anglais: \"Recueil et synthèse de données\"","choices":["Data Collection and Summary","Data Gathering and Synthesis","Data Extraction and Synthesis","Data Retrieval and Analysis"],"answerIndex":2,"correctAnswerText":"","explanation":"\"Data Extraction and Synthesis\" décrit le processus de collecte et de combinaison des données issues de différentes sources pour une analyse globale.","id":"q-1781723370979-4"},{"type":"qcm","prompt":"Traduisez en anglais: \"ont obtenu une rémission\"","choices":["got remission","achieved remission","obtained remission","reached remission"],"answerIndex":1,"correctAnswerText":"","explanation":"\"achieved remission\" est l'expression idiomatique correcte et la plus courante en anglais médical pour indiquer qu'un patient est entré en rémission.","id":"q-1781723370979-5"},{"type":"qcm","prompt":"Traduisez en anglais: \"n'ont pas donné leur consentement\"","choices":["didn't provide consent","refused consent","did not give consent","no consent given"],"answerIndex":2,"correctAnswerText":"","explanation":"\"did not give consent\" est la formulation standard et formelle pour exprimer un refus de consentement dans un contexte de recherche.","id":"q-1781723370979-6"},{"type":"qcm","prompt":"Traduisez en anglais: \"ont été randomisés\"","choices":["were randomized","randomized","underwent randomization","got randomized"],"answerIndex":2,"correctAnswerText":"","explanation":"\"underwent randomization\" est une expression formelle et précise, utilisée pour décrire le processus par lequel les participants sont assignés aléatoirement à des groupes d'étude.","id":"q-1781723370979-7"},{"type":"qcm","prompt":"Traduisez en anglais: \"ont été perdus de vue\"","choices":["lost sight of","were lost from study","were lost to follow-up","lost track of"],"answerIndex":2,"correctAnswerText":"","explanation":"\"were lost to follow-up\" est le terme spécifique en recherche pour les participants qui ne peuvent plus être contactés ou suivis pendant une étude.","id":"q-1781723370979-8"},{"type":"qcm","prompt":"Traduisez en anglais: \"Effet indésirable\"","choices":["Bad effect","Negative outcome","Adverse effect","Undesirable effect"],"answerIndex":2,"correctAnswerText":"","explanation":"\"Adverse effect\" est le terme médical standard pour un effet non souhaité ou nocif d'un traitement ou d'une intervention.","id":"q-1781723370979-9"},{"type":"qcm","prompt":"Traduisez en anglais: \"Délai d'apparition des effets\"","choices":["Effect delay","Time of appearance","Onset delay","Delay of effects"],"answerIndex":2,"correctAnswerText":"","explanation":"\"Onset delay\" ou \"time to onset\" sont les traductions précises pour le temps écoulé avant l'apparition des effets d'une intervention ou d'une maladie.","id":"q-1781723370979-10"},{"type":"qcm","prompt":"Traduisez en anglais: \"Intervalle de confiance\"","choices":["Reliability interval","Confidence interval","Trust interval","Certainty interval"],"answerIndex":1,"correctAnswerText":"","explanation":"\"Confidence interval\" est le terme statistique standard utilisé pour exprimer la précision d'une estimation.","id":"q-1781723370979-11"},{"type":"qcm","prompt":"Traduisez en anglais: \"Taux d'incidence\"","choices":["Rate of incidence","Incidence ratio","Incidence rate","Occurrence rate"],"answerIndex":2,"correctAnswerText":"","explanation":"\"Incidence rate\" est le terme épidémiologique correct pour mesurer la fréquence de nouvelles maladies ou événements dans une population sur une période donnée.","id":"q-1781723370979-12"},{"type":"qcm","prompt":"Traduisez en anglais: \"Facteur de confusion\"","choices":["Confusion factor","Disturbing factor","Confounding factor","Mixing factor"],"answerIndex":2,"correctAnswerText":"","explanation":"\"Confounding factor\" (ou \"confounder\") est le terme exact en épidémiologie pour une variable qui influence à la fois la variable dépendante et la variable indépendante, créant une association fallacieuse.","id":"q-1781723370979-13"},{"type":"qcm","prompt":"Traduisez en anglais: \"Méthode à double insu (double aveugle)\"","choices":["Double-blind study","Two-blind method","Double-blind method","Blind method"],"answerIndex":2,"correctAnswerText":"","explanation":"\"Double-blind method\" est le terme standard pour une étude où ni les participants ni les chercheurs ne connaissent l'affectation des traitements, afin de réduire les biais.","id":"q-1781723370979-14"}];
+  let score = 0;
+  let answered = new Set();
+
+  function resetAll() {
+    score = 0;
+    answered.clear();
+    document.getElementById('score').innerText = score;
+    document.getElementById('progress').innerText = '0';
+    questions.forEach((q, idx) => {
+      const exp = document.getElementById(`exp-${idx}`);
+      if (exp) exp.classList.remove('visible');
+      
+      const btn = document.getElementById(`btn-val-${idx}`);
+      if (btn) btn.disabled = false;
+      
+      if (String(q.type || 'qcm').toLowerCase() === 'qroc') {
+        const inputEl = document.getElementById(`input-${idx}`);
+        if (inputEl) {
+          inputEl.value = '';
+          inputEl.disabled = false;
+        }
+      } else {
+        document.querySelectorAll(`input[name="q-${idx}"]`).forEach(i => {
+          i.checked = false;
+          i.disabled = false;
+        });
+        document.querySelectorAll(`#q-${idx} .choice`).forEach(l => {
+          l.classList.remove('selected', 'correct', 'incorrect');
+        });
+      }
+    });
+  }
+
+  function selectChoice(qIdx, cIdx) {
+    if (answered.has(qIdx)) return;
+    const labels = document.querySelectorAll(`#q-${qIdx} .choice`);
+    labels.forEach(l => l.classList.remove('selected'));
+    const label = document.getElementById(`label-${qIdx}-${cIdx}`);
+    if (label) label.classList.add('selected');
+  }
+
+  function toggleExplanation(qIdx, forceShow = false) {
+    const exp = document.getElementById(`exp-${qIdx}`);
+    if (!exp) return;
+    if (forceShow) exp.classList.add('visible');
+    else exp.classList.toggle('visible');
+  }
+
+  function revealAll() {
+    questions.forEach((q, idx) => {
+      validate(idx, true);
+      toggleExplanation(idx, true);
+    });
+  }
+
+  function validate(qIdx, isAutomatic = false) {
+    if (answered.has(qIdx)) return;
+    const q = questions[qIdx];
+    let isCorrect = false;
+    
+    if (String(q.type || 'qcm').toLowerCase() === 'qroc') {
+      const inputEl = document.getElementById(`input-${qIdx}`);
+      if (!inputEl) return;
+      const val = inputEl.value.toLowerCase().trim();
+      const expected = String(q.correctAnswerText || '').toLowerCase().trim();
+      if (val === expected || (val.length > 3 && expected.includes(val))) {
+        isCorrect = true;
+      }
+      inputEl.disabled = true;
+    } else {
+      const selected = document.querySelector(`input[name="q-${qIdx}"]:checked`);
+      if (!selected) {
+        if (!isAutomatic) {
+          return alert("Veuillez sélectionner une réponse.");
+        }
+        const rightLabel = document.getElementById(`label-${qIdx}-${q.answerIndex}`);
+        if (rightLabel) rightLabel.classList.add('correct');
+      } else {
+        const val = parseInt(selected.value);
+        if (val === q.answerIndex) {
+          isCorrect = true;
+          const label = document.getElementById(`label-${qIdx}-${val}`);
+          if (label) label.classList.add('correct');
+        } else {
+          const wrongLabel = document.getElementById(`label-${qIdx}-${val}`);
+          if (wrongLabel) wrongLabel.classList.add('incorrect');
+          const rightLabel = document.getElementById(`label-${qIdx}-${q.answerIndex}`);
+          if (rightLabel) rightLabel.classList.add('correct');
+        }
+      }
+      document.querySelectorAll(`input[name="q-${qIdx}"]`).forEach(i => i.disabled = true);
+    }
+    
+    answered.add(qIdx);
+    const btnVal = document.getElementById(`btn-val-${qIdx}`);
+    if (btnVal) btnVal.disabled = true;
+    
+    document.getElementById('progress').innerText = answered.size;
+    
+    toggleExplanation(qIdx, true);
+    
+    if (isCorrect) {
+      score++;
+      document.getElementById('score').innerText = score;
+    }
+  }
+</script>
+</body>
+</html>
